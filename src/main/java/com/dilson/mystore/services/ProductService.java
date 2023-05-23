@@ -1,6 +1,7 @@
 package com.dilson.mystore.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,8 @@ public class ProductService {
     }
 
     public Product findById(Long id) {
-        return this.findById(id);
+        Optional<Product> product = this.productRepository.findById(id);
+        return product.orElseThrow(() -> new RuntimeException("Produto não encontrado"));
     }
 
     @Transactional
@@ -39,7 +41,7 @@ public class ProductService {
         return newProduct;
     }
 
-    public void delete(Long id){
+    public void delete(Long id) {
         this.productRepository.deleteById(id);
     }
 }
